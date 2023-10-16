@@ -35,12 +35,14 @@ Counter read_from_fd(FILE *fd) {
   // new fancy way of initializing structs
   Counter cnt = { .bytes = 0, .chars = 0, .words = 0, .lines = 0 };
 
-  // FIX: Bytes are not counted properly
+  // TODO: This can be improved by buffering,
+  //       but reading one char at a time 
+  //       works for now
   while(WEOF != (wc = fgetwc(fd))) {
     if(wc == wctob(wc)) {
       cnt.bytes++;
     } else {
-      cnt.bytes += 2;
+      cnt.bytes += 4;
     }
     cnt.chars++;
 
@@ -145,11 +147,11 @@ int main(int argc, char ** argv) {
   // Very nice
   Counter counter = read_from_fd(inputfd);
 
-  if(lflag) printf("%ld ", counter.lines);
-  if(wflag) printf("%ld ", counter.words);
-  if(mflag) printf("%ld ", counter.chars);
-  if(cflag) printf("%ld ", counter.bytes);
-  if(filename) printf("%s", filename);
+  if(lflag) printf("  %ld", counter.lines);
+  if(wflag) printf("  %ld", counter.words);
+  if(mflag) printf("  %ld", counter.chars);
+  if(cflag) printf("  %ld", counter.bytes);
+  if(filename) printf("  %s", filename);
 
   printf("\n");
   
