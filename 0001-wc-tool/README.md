@@ -5,6 +5,11 @@ Clone of wc UNIX command tool. Done as part of [Monk Coding Challenge](https://s
 
 Challenge specification: [Write Your Own wc Tool](https://codingchallenges.fyi/challenges/challenge-wc)
 
+## Blog Post
+
+[Monk Coding Challenge 1: wc tool](https://shellmonk.io/posts/monk-coding-challenge-1-wc/)
+
+
 ## Prerequisites
 
 - POSIX compliant operating system (any Linux will do)
