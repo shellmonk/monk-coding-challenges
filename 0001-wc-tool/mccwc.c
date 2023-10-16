@@ -81,8 +81,6 @@ void print_help() {
 }
 
 
-
-
 int main(int argc, char ** argv) {
 
   // Reset all flags
