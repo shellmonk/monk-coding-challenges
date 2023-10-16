@@ -19,7 +19,7 @@ Challenge specification: [Write Your Own wc Tool](https://codingchallenges.fyi/c
 
 ```bash
 make
-./mccwc
+./mccwc test.txt
 ```
 
 ## Usage
