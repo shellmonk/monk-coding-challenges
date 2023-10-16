@@ -8,8 +8,7 @@
 #include <wchar.h>
 
 /**
- * @brief Counter structure containing counted characters, words and lines
- * 
+ * @brief Counter structure containing counted bytes, characters, words and lines
  */
 typedef struct  {  
   unsigned long bytes;
@@ -25,10 +24,18 @@ typedef struct  {
  * @return Counter struct
  */
 Counter read_from_fd(FILE *fd) {
+
+  // current wide character
   wint_t wc;
+
+  // wopen = word open
+  // meaning that word is being read
   bool wopen = false;
+
+  // new fancy way of initializing structs
   Counter cnt = { .bytes = 0, .chars = 0, .words = 0, .lines = 0 };
 
+  // FIX: Bytes are not counted properly
   while(WEOF != (wc = fgetwc(fd))) {
     if(wc == wctob(wc)) {
       cnt.bytes++;
@@ -36,9 +43,14 @@ Counter read_from_fd(FILE *fd) {
       cnt.bytes += 2;
     }
     cnt.chars++;
+
+    // if new line, add newline, obviously
     if(wc == L'\n') cnt.lines++;
 
+    // check if character is whitespace - ' ', \n, \t, \r, etc.
     bool space = iswspace(wc);
+
+    // counting the words
     if(wopen) {
       if(space) {
         wopen = false;
@@ -54,16 +66,38 @@ Counter read_from_fd(FILE *fd) {
   return cnt;
 }
 
+/**
+ * @brief Print help
+ */
+void print_help() {
+  printf("Usage: mccwc [OPTION] ... [FILE]\n\n");
+  printf("Print newline, word, and byte counts for FILE. A word is a non-zero-length sequence of printable characters delimited by white space.\n\n");
+  printf("-c\tprint the byte count\n");
+  printf("-m\tprint the character count\n");
+  printf("-l\tprint the newline count\n");
+  printf("-w\tprint the wird count\n\n");
+  printf("Without FILE, read standard input\n");
+  exit(EXIT_SUCCESS);
+}
+
+
+
+
 int main(int argc, char ** argv) {
 
-  bool cflag = false, wflag = false, lflag = false, mflag = false;
+  // Reset all flags
+  bool cflag = false, wflag = false, lflag = false, mflag = false, hflag = false;
   char *filename = NULL;
+
+  // One file descriptor declaration can be used both for FILE and standard input
+  // In UNIX world, everything is a file
   FILE *inputfd;
 
+  // Locale must be set in order to properly work with wide characters
   setlocale(LC_ALL, "");
 
   int c;
-  while ((c = getopt(argc, argv, "-mcwl")) != -1) {
+  while ((c = getopt(argc, argv, "-mcwlh")) != -1) {
     switch (c) {
     case 'c':
       cflag = true;
@@ -77,6 +111,9 @@ int main(int argc, char ** argv) {
     case 'm':
       mflag = true;
       break;
+    case 'h':
+      hflag = true;
+      break;
     case '?':
       fprintf(stderr, "[ERROR] Unknown option: %c\n", optopt);
       exit(EXIT_FAILURE);
@@ -86,12 +123,17 @@ int main(int argc, char ** argv) {
     }
   }
 
+  if(hflag) {
+    print_help();
+  }
+
+  // if no flags - c, w and l are default
   if(!cflag && !wflag && !lflag && !mflag) {
     cflag = wflag = lflag = true;
   }
 
-  
-
+  // if file is provided, read it
+  // if not, default to standard input
   if(filename) {
     inputfd = fopen(filename, "r");
     if(inputfd == NULL) {
@@ -102,6 +144,7 @@ int main(int argc, char ** argv) {
     inputfd = stdin;
   }
 
+  // Very nice
   Counter counter = read_from_fd(inputfd);
 
   if(lflag) printf("%ld ", counter.lines);
@@ -112,6 +155,7 @@ int main(int argc, char ** argv) {
 
   printf("\n");
   
+  // Be polite to your OS, always return 0
   return 0;
 }
 
