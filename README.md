@@ -9,7 +9,7 @@ More details at:
 
 | Challenge name | Decription URL | Solution URL | Language | Status | 
 | -------------- | -------------- | ------------ | -------- | ------ |
-| wc tool | https://codingchallenges.fyi/challenges/challenge-wc | N/A | N/A | TODO |
+| wc tool | https://codingchallenges.fyi/challenges/challenge-wc | https://github.com/shellmonk/mccwc | C | Done |
 | JSON parser | https://codingchallenges.fyi/challenges/challenge-json-parser | N/A | N/A | TODO |
 | compression tool | https://codingchallenges.fyi/challenges/challenge-huffman | N/A | N/A | TODO |
 | cut tool | https://codingchallenges.fyi/challenges/challenge-cut | N/A | N/A | TODO |
