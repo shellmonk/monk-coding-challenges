@@ -10,7 +10,7 @@ More details at:
 | Challenge name | Decription URL | Solution | Language | Status | 
 | -------------- | -------------- | ------------ | -------- | ------ |
 | wc tool | [Write Your Own wc Tool](https://codingchallenges.fyi/challenges/challenge-wc) | [mccwc](https://github.com/shellmonk/mccwc) | C | Done |
-| JSON parser | [Write Your Own JSON Parser](https://codingchallenges.fyi/challenges/challenge-json-parser) | N/A | N/A | TODO |
+| JSON parser | [Write Your Own JSON Parser](https://codingchallenges.fyi/challenges/challenge-json-parser) | [rjsonp](https://github.com/shellmonk/rjsonp) | Raku | In progress |
 | compression tool | [Write Your Own Compression Tool](https://codingchallenges.fyi/challenges/challenge-huffman) | N/A | N/A | TODO |
 | cut tool | [Write Your Own cut Tool](https://codingchallenges.fyi/challenges/challenge-cut) | N/A | N/A | TODO |
 | load balancer | [Write Your Own Load Balancer](https://codingchallenges.fyi/challenges/challenge-load-balancer) | N/A | N/A | TODO |
